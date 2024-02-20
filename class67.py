@@ -100,6 +100,7 @@ pcscores = pca.transform( zfeatures )
 #
 # FA - Rotation
 #
+
 # Python の PCA には回転の機能が実装されていません．回転を使うために因子分析 FactorAnalyzer のパッケージを使っています．
 # PCA と FA はよく似ていますので，ここでは FA で PCA を代用しています．
 #
