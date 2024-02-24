@@ -52,7 +52,7 @@ for i in range(178):
         print( ' ' + str(x) )
 
 # 6つの外れ値が見つかり、除外．中身をよく見ずに．外れ値として除外すべきか十分に検討する
-# 外れ値の基準として 0.99 を使用．0.95 でも構いません．
+# 外れ値の基準として 0.99 を使用．0.95 でもok．
 new_features = np.delete( features, [69, 73, 95, 110, 121, 158], axis=0 )
 
 #
@@ -63,7 +63,7 @@ zfeatures = scipy.stats.zscore( new_features ) # Standardize (z-score)
 #print( np.mean( zfeatures, axis=0 ) )
 #print( np.var( zfeatures, axis=0 ) )
 
-# ここでは主成分の数を変数の数と同じにしていますが、それは固有値を見て、いくつの主成分を採用するか検討するためです
+# ここでは主成分の数を変数の数と同じにしている。固有値を見て、いくつの主成分を採用するか検討するため
 pca = PCA( n_components=dim )
 pca.fit( zfeatures )
 
@@ -80,8 +80,8 @@ plt.title( "Scree graph" )
 plt.ylabel( "Eigen value" )
 plt.show()
 
-# このサンプルでは，Kayser-Gutman 基準を用いて λ >= 1 となる３つの主成分を採用しました
-# 累積寄与率やスクリーグラフの形を基準としてもらっても構いません
+# このサンプルでは，Kayser-Gutman 基準を用いて λ >= 1 となる３つの主成分を採用
+# 累積寄与率やスクリーグラフの形を基準としても構わない
 
 pcscores = pca.transform( zfeatures )
 
@@ -101,11 +101,11 @@ pcscores = pca.transform( zfeatures )
 # FA - Rotation
 #
 
-# Python の PCA には回転の機能が実装されていません．回転を使うために因子分析 FactorAnalyzer のパッケージを使っています．
-# PCA と FA はよく似ていますので，ここでは FA で PCA を代用しています．
+# Python の PCA には回転の機能が実装されていない．回転を使うために因子分析 FactorAnalyzer のパッケージを使っている．
+# PCA と FA はよく似ているため，ここでは FA で PCA を代用している.
 #
-fap = FactorAnalyzer( n_factors=3, rotation='promax' ) # promax法を使う場合がこちらです -> fap
-fan = FactorAnalyzer( n_factors=3, rotation=None ) # 回転させない場合がこちらです -> fan
+fap = FactorAnalyzer( n_factors=3, rotation='promax' ) # promax法を使う場合がこちら -> fap
+fan = FactorAnalyzer( n_factors=3, rotation=None ) # 回転させない場合がこちら -> fan
 fap.fit( zfeatures ) # FAの計算
 fan.fit( zfeatures )
 fapscores = fap.transform( zfeatures ) # FA得点の計算
@@ -136,8 +136,8 @@ plt.plot( xax, fap.loadings_[:,2], "g--", label="3rd PC after rotation" )
 plt.legend()
 plt.show()
 
-# この例題では，回転によって PC係数（負荷量）はあまり変化しませんでしたが，大きく変化することもあります．
-# 回転の前後で，主成分を解釈して下さい
+# この例題では，回転によって PC係数（負荷量）はあまり変化しなかったが，大きく変化することもある．
+# 回転の前後で，主成分を解釈して
 
 #print( np.linalg.norm( pca.components_[:,0], 2 ) )
 #print( np.linalg.norm( fan.loadings_[:,0], 2 )**2 )
